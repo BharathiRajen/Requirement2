@@ -1,61 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Requirement2
 {
     class Program
     {
-        public static Boolean ValidatePassword(String password)
+        public static Boolean validatePassword(string userPassword)
         {
-            int validConditions = 0;
-            foreach (char c in password)
-            {
-                if (c >= 'a' && c <= 'z')
-                {
-                    validConditions++;
-                    break;
-                }
-            }
-            foreach (char c in password)
-            {
-                if (c >= 'A' && c <= 'Z')
-                {
-                    validConditions++;
-                    break;
-                }
-            }
-            if (validConditions == 0)
-                return false;
-            foreach (char c in password)
-            {
-                if (c >= '0' && c <= '9')
-                {
-                    validConditions++;
-                    break;
-                }
-            }
-            if (validConditions == 1) return false;
-            if (validConditions == 2)
-            {
-                char[] special = { '@', '#', '$', '%', '^', '&', '+', '=' }; // or whatever
-                if (password.IndexOfAny(special) == -1) return false;
-            }
-            return true;
+            Regex regex = new Regex("^[A-Z][\\S][A-Za-z0-9_@#%!]{8,15}$");
+            return regex.IsMatch(userPassword);
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter the password to be validated:");
-            string password = Console.ReadLine(); if (ValidatePassword(password))
+            Console.WriteLine("Password Validation:");
+            Console.WriteLine("Enter Password:");
+            string password = Console.ReadLine(); if (validatePassword(password))
             {
-                Console.WriteLine("Password is valid");
+                Console.WriteLine("Valid Password!..");
             }
             else
             {
-                Console.WriteLine("Password is not valid");
+                Console.WriteLine("Invalid Password!..");
             }
         }
     }
 }
+
